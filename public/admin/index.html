@@ -4,8 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SHAAR Studio — Admin</title>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
+  <div id="nc-root"></div>
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
+```
+
+The missing piece was `<div id="nc-root"></div>` — that's where the CMS renders itself.
+
+Save the file, then in terminal:
+```
+git add .
+git commit -m "Fix admin mount point"
+git push

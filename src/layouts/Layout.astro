@@ -14,25 +14,30 @@ const { title = 'SHAAR Studio — Sajjad Sharifi', activeNav = '' } = Astro.prop
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script is:inline>
+  window.addEventListener('load', function() {
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", function(user) {
+        if (!user) {
+          window.netlifyIdentity.on("login", function() {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+      var hash = window.location.hash || "";
+      if (hash.includes("invite_token") || hash.includes("recovery_token")) {
+        window.netlifyIdentity.open();
+      }
+    }
+  });
+</script>
 </head>
 <body>
   <Nav active={activeNav} />
   <slot />
   <Footer />
   <script>
-    // Handle Identity widget
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-      if (window.location.hash.includes("invite_token") || window.location.hash.includes("recovery_token")) {
-        window.netlifyIdentity.open();
-      }
-    }
+    
     // Nav scroll effect
     window.addEventListener('scroll', () => {
       document.querySelector('nav')?.classList.toggle('scrolled', window.scrollY > 60);

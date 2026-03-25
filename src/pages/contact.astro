@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import contactData from '../data/contact.json';
+---
+<Layout title="Contact — SHAAR Studio" activeNav="contact">
+  <div class="contact-layout">
+    <div class="section-label">Get in Touch</div>
+    <h1>Let's <em>Talk</em></h1>
+    <p>{contactData.subtitle}</p>
+    <a class="contact-email" href={`mailto:${contactData.email}`}>{contactData.email}</a>
+    <ul class="contact-socials">
+      {contactData.instagram && contactData.instagram !== '#' && (
+        <li><a href={contactData.instagram} target="_blank">Instagram</a></li>
+      )}
+      {contactData.linkedin && contactData.linkedin !== '#' && (
+        <li><a href={contactData.linkedin} target="_blank">LinkedIn</a></li>
+      )}
+      <li><a href="https://shaarstudio.com" target="_blank">shaarstudio.com</a></li>
+    </ul>
+  </div>
+</Layout>

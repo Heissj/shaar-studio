@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+import galleryData from '../data/gallery.json';
+import { getCollection } from 'astro:content';
+
+const photos = await getCollection('gallery');
+const galleryPhotos = photos.filter(p => p.data.page === 'gallery');
+---
+<Layout title="Gallery — SHAAR Studio" activeNav="gallery">
+  <div class="gallery-hero">
+    <h1>Gallery</h1>
+    <p>{galleryData.subtitle}</p>
+  </div>
+  <div class="gallery-filters">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="street">Street</button>
+    <button data-filter="portrait">Portrait</button>
+    <button data-filter="architecture">Architecture</button>
+    <button data-filter="landscape">Landscape</button>
+  </div>
+  <div class="masonry" id="galleryMasonry">
+    {galleryPhotos.length > 0 ? (
+      galleryPhotos.map(photo => (
+        <div class="masonry-item" data-tag={photo.data.tag}>
+          <img src={photo.data.image} alt={photo.data.title} loading="lazy" />
+          <div class="overlay"></div>
+          <div class="caption">
+            <h3>{photo.data.title}</h3>
+            <p>{photo.data.location}</p>
+          </div>
+        </div>
+      ))
+    ) : (
+      <p style="color: var(--text-dim); grid-column: 1/-1; text-align: center; padding: 4rem 0;">
+        Upload photos through the CMS admin panel at <a href="/admin" style="color: var(--accent)">/admin</a>
+      </p>
+    )}
+  </div>
+
+  <script>
+    document.querySelectorAll('.gallery-filters button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.gallery-filters button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.masonry-item').forEach(item => {
+          item.style.display = (filter === 'all' || item.dataset.tag === filter) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+</Layout>

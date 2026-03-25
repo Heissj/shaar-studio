@@ -1,0 +1,191 @@
+---
+import Layout from '../layouts/Layout.astro';
+import homeData from '../data/home.json';
+---
+<Layout activeNav="home">
+  <section class="hero">
+    <p class="hero-subtitle">{homeData.subtitle}</p>
+    <h1>The City<br><em>Revealed</em></h1>
+    <p class="hero-tagline">{homeData.tagline}</p>
+    <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+  </section>
+
+  <!-- Scroll-driven cinema — add your featured photos as slides -->
+  <div class="cinema-wrapper" id="cinemaWrapper">
+    <section class="cinema" id="cinema">
+      <!-- Replace placeholder-bg divs with <img> tags once you have photos -->
+      <div class="cinema-slide active" data-title="Morning Market" data-location="Kabul, 2018">
+        <div class="slide-bg"><div class="placeholder-bg"><span>Photo 1</span></div></div>
+      </div>
+      <div class="cinema-slide" data-title="The Bread Seller" data-location="Kabul, 2019">
+        <div class="slide-bg"><div class="placeholder-bg"><span>Photo 2</span></div></div>
+      </div>
+      <div class="cinema-slide" data-title="Winter Crossroads" data-location="Kabul, 2020">
+        <div class="slide-bg"><div class="placeholder-bg"><span>Photo 3</span></div></div>
+      </div>
+      <div class="cinema-slide" data-title="After the Rain" data-location="Kabul, 2018">
+        <div class="slide-bg"><div class="placeholder-bg"><span>Photo 4</span></div></div>
+      </div>
+      <div class="cinema-slide" data-title="Departure" data-location="Kabul, 2021">
+        <div class="slide-bg"><div class="placeholder-bg"><span>Photo 5</span></div></div>
+      </div>
+
+      <div class="cinema-caption">
+        <div class="cinema-caption-text">
+          <div class="cinema-number" id="cinemaNumber">01 / 05</div>
+          <h2 id="cinemaTitle" class="visible">Morning Market</h2>
+          <p id="cinemaLocation" class="visible">Kabul, 2018</p>
+        </div>
+        <div class="cinema-caption-right">
+          <div class="cinema-indicators" id="cinemaIndicators">
+            <button class="cinema-ind active" data-slide="0"></button>
+            <button class="cinema-ind" data-slide="1"></button>
+            <button class="cinema-ind" data-slide="2"></button>
+            <button class="cinema-ind" data-slide="3"></button>
+            <button class="cinema-ind" data-slide="4"></button>
+          </div>
+          <div class="cinema-nav">
+            <button id="cinemaPrev">&#8592;</button>
+            <button id="cinemaNext">&#8594;</button>
+          </div>
+        </div>
+      </div>
+      <div class="cinema-progress"><div class="cinema-progress-bar" id="cinemaBar"></div></div>
+    </section>
+  </div>
+
+  <!-- Drag strip -->
+  <section class="strip-section">
+    <div class="strip-header">
+      <div class="section-label reveal">More Work</div>
+      <span class="strip-count">8 Photographs</span>
+    </div>
+    <div class="strip-container">
+      <div class="strip-track" id="stripTrack">
+        <!-- Replace placeholders with real images -->
+        <div class="strip-card"><div class="strip-card-img"><div class="placeholder-bg" style="width:100%;height:100%"><span>Photo</span></div></div><div class="strip-card-info"><h3>The Carpenter</h3><span>Kabul, 2019</span></div></div>
+        <div class="strip-card"><div class="strip-card-img"><div class="placeholder-bg" style="width:100%;height:100%"><span>Photo</span></div></div><div class="strip-card-info"><h3>Window Light</h3><span>Kabul, 2017</span></div></div>
+        <div class="strip-card"><div class="strip-card-img"><div class="placeholder-bg" style="width:100%;height:100%"><span>Photo</span></div></div><div class="strip-card-info"><h3>Blue Hour</h3><span>Boston, 2025</span></div></div>
+        <div class="strip-card"><div class="strip-card-img"><div class="placeholder-bg" style="width:100%;height:100%"><span>Photo</span></div></div><div class="strip-card-info"><h3>Tea House</h3><span>Kabul, 2020</span></div></div>
+        <div class="strip-card"><div class="strip-card-img"><div class="placeholder-bg" style="width:100%;height:100%"><span>Photo</span></div></div><div class="strip-card-info"><h3>Somerville Walk</h3><span>Boston, 2026</span></div></div>
+        <div class="strip-card"><div class="strip-card-img"><div class="placeholder-bg" style="width:100%;height:100%"><span>Photo</span></div></div><div class="strip-card-info"><h3>Dusk Market</h3><span>Kabul, 2018</span></div></div>
+        <div class="strip-card"><div class="strip-card-img"><div class="placeholder-bg" style="width:100%;height:100%"><span>Photo</span></div></div><div class="strip-card-info"><h3>Commute</h3><span>Kabul, 2020</span></div></div>
+        <div class="strip-card"><div class="strip-card-img"><div class="placeholder-bg" style="width:100%;height:100%"><span>Photo</span></div></div><div class="strip-card-info"><h3>Old Quarter</h3><span>Kabul, 2017</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="section-label" style="justify-content:center;margin-bottom:2rem"><span style="opacity:0.7">Latest Project</span></div>
+    <h2>{homeData.ctaHeading.split(' ')[0]} <em>{homeData.ctaHeading.split(' ').slice(1).join(' ')}</em></h2>
+    <p>{homeData.ctaText}</p>
+    <a class="btn" href="/kabul-streets" style="margin-right:1rem">Explore the Project</a>
+    <a class="btn" href="/projects" style="border-color:var(--text-dim);color:var(--text-muted)">View All Projects</a>
+  </section>
+
+  <script>
+    // ═══ CINEMA (scroll-driven) ═══
+    const slides = document.querySelectorAll('.cinema-slide');
+    const indicators = document.querySelectorAll('.cinema-ind');
+    const bar = document.getElementById('cinemaBar');
+    const cinemaWrapper = document.getElementById('cinemaWrapper');
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+
+    function goSlide(idx, progress) {
+      const changed = idx !== currentSlide;
+      currentSlide = idx;
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      indicators.forEach((ind, i) => ind.classList.toggle('active', i === idx));
+      if (progress !== undefined) {
+        const segSize = 1 / totalSlides;
+        const localProgress = Math.max(0, Math.min(1, (progress - idx * segSize) / segSize));
+        slides[idx].querySelector('.slide-bg').style.transform = `scale(${1 + localProgress * 0.1})`;
+      }
+      if (changed) {
+        const t = document.getElementById('cinemaTitle');
+        const l = document.getElementById('cinemaLocation');
+        const n = document.getElementById('cinemaNumber');
+        t.classList.remove('visible'); l.classList.remove('visible');
+        setTimeout(() => {
+          t.textContent = slides[idx].dataset.title;
+          l.textContent = slides[idx].dataset.location;
+          n.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0');
+          t.classList.add('visible'); l.classList.add('visible');
+        }, 100);
+      }
+    }
+
+    let scrollTicking = false;
+    window.addEventListener('scroll', () => {
+      if (!scrollTicking) { scrollTicking = true; requestAnimationFrame(() => {
+        if (!cinemaWrapper) return;
+        const rect = cinemaWrapper.getBoundingClientRect();
+        const wH = cinemaWrapper.offsetHeight - window.innerHeight;
+        if (wH <= 0) return;
+        const progress = Math.max(0, Math.min(1, -rect.top / wH));
+        bar.style.width = (progress * 100) + '%';
+        goSlide(Math.min(Math.floor(progress * totalSlides), totalSlides - 1), progress);
+        scrollTicking = false;
+      }); }
+    });
+
+    document.getElementById('cinemaNext')?.addEventListener('click', () => {
+      const next = (currentSlide + 1) % totalSlides;
+      const seg = (cinemaWrapper.offsetHeight - window.innerHeight) / totalSlides;
+      window.scrollTo({ top: cinemaWrapper.offsetTop + next * seg, behavior: 'smooth' });
+    });
+    document.getElementById('cinemaPrev')?.addEventListener('click', () => {
+      const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+      const seg = (cinemaWrapper.offsetHeight - window.innerHeight) / totalSlides;
+      window.scrollTo({ top: cinemaWrapper.offsetTop + prev * seg, behavior: 'smooth' });
+    });
+    indicators.forEach(ind => ind.addEventListener('click', () => {
+      const idx = parseInt(ind.dataset.slide);
+      const seg = (cinemaWrapper.offsetHeight - window.innerHeight) / totalSlides;
+      window.scrollTo({ top: cinemaWrapper.offsetTop + idx * seg, behavior: 'smooth' });
+    }));
+
+    // ═══ STRIP (auto-drift + momentum drag) ═══
+    const track = document.getElementById('stripTrack');
+    let isDragging = false, dragStartX = 0, dragScrollLeft = 0;
+    let velocity = 0, lastX = 0, lastTime = 0, momentumId = null;
+    const FRICTION = 0.94, MIN_VEL = 0.3;
+    let driftPaused = false, driftDir = 1;
+
+    // Use setInterval for Safari compatibility (rAF can stall)
+    let driftInterval = null;
+    function startDrift() {
+      if (driftInterval) return;
+      driftInterval = setInterval(() => {
+        if (!driftPaused && !isDragging && !momentumId && track) {
+          track.scrollLeft += 0.5 * driftDir;
+          if (track.scrollLeft >= track.scrollWidth - track.clientWidth - 2) driftDir = -1;
+          if (track.scrollLeft <= 2) driftDir = 1;
+        }
+      }, 16);
+    }
+    startDrift();
+
+    track?.addEventListener('mouseenter', () => driftPaused = true);
+    track?.addEventListener('mouseleave', () => { if (!isDragging) driftPaused = false; });
+
+    function stopMomentum() { if (momentumId) { cancelAnimationFrame(momentumId); momentumId = null; } }
+    function applyMomentum() {
+      if (Math.abs(velocity) < MIN_VEL) { momentumId = null; driftPaused = false; return; }
+      if (track) track.scrollLeft -= velocity;
+      velocity *= FRICTION;
+      momentumId = requestAnimationFrame(applyMomentum);
+    }
+    function onDragStart(x) { stopMomentum(); isDragging = true; driftPaused = true; dragStartX = x; dragScrollLeft = track ? track.scrollLeft : 0; lastX = x; lastTime = performance.now(); velocity = 0; track?.classList.add('grabbing'); }
+    function onDragMove(x) { if (!isDragging || !track) return; const now = performance.now(), dt = now - lastTime; if (dt > 0) velocity = (x - lastX) * (16 / dt); lastX = x; lastTime = now; track.scrollLeft = dragScrollLeft - (x - dragStartX); }
+    function onDragEnd() { if (!isDragging) return; isDragging = false; track?.classList.remove('grabbing'); velocity *= 1.2; if (Math.abs(velocity) > MIN_VEL) momentumId = requestAnimationFrame(applyMomentum); else driftPaused = false; }
+
+    track?.addEventListener('mousedown', e => { e.preventDefault(); onDragStart(e.pageX); });
+    window.addEventListener('mousemove', e => { if (isDragging) { e.preventDefault(); onDragMove(e.pageX); } });
+    window.addEventListener('mouseup', onDragEnd);
+    track?.addEventListener('touchstart', e => onDragStart(e.touches[0].pageX), { passive: true });
+    window.addEventListener('touchmove', e => { if (isDragging) onDragMove(e.touches[0].pageX); }, { passive: true });
+    window.addEventListener('touchend', onDragEnd);
+  </script>
+</Layout>

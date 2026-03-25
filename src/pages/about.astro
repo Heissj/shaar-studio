@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import aboutData from '../data/about.json';
+import { getCollection } from 'astro:content';
+
+const photos = await getCollection('gallery');
+const portrait = photos.find(p => p.data.page === 'about');
+---
+<Layout title="About — SHAAR Studio" activeNav="about">
+  <div class="about-layout">
+    <div class="about-portrait">
+      {portrait ? (
+        <img src={portrait.data.image} alt="Sajjad Sharifi" />
+      ) : (
+        <div class="placeholder-bg" style="height:100%"><span>Portrait</span></div>
+      )}
+    </div>
+    <div class="about-text">
+      <div class="section-label">About the Photographer</div>
+      <h1>Sajjad <em>Sharifi</em></h1>
+      <p>{aboutData.p1}</p>
+      <p>{aboutData.p2}</p>
+      <p>{aboutData.p3}</p>
+      <p class="about-tagline">{aboutData.tagline}</p>
+      <div class="about-values">
+        {aboutData.values.map(v => <span class="value-tag">{v}</span>)}
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,27 @@
+{
+  "subtitle": "Long-form photographic work exploring the relationship between people and the places they inhabit",
+  "projects": [
+    {
+      "title": "Kabul Streets",
+      "label": "Photo Book",
+      "description": "Five years documenting daily life, markets, and hidden corners of Kabul — before everything changed.",
+      "cover": "",
+      "period": "2016 — 2021",
+      "location": "Kabul, Afghanistan",
+      "camera": "iPhone",
+      "status": "In Development",
+      "link": "/kabul-streets"
+    },
+    {
+      "title": "Boston Margins",
+      "label": "Upcoming",
+      "description": "The overlooked edges of a world-class city — transit corridors, service roads, and the spaces between neighborhoods.",
+      "cover": "",
+      "period": "2025 — Present",
+      "location": "Boston, MA",
+      "camera": "Fujifilm",
+      "status": "Coming Soon",
+      "link": ""
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import projectsData from '../data/projects.json';
+import { getCollection } from 'astro:content';
+
+const kabul = projectsData.projects.find(p => p.title === 'Kabul Streets') || projectsData.projects[0];
+const photos = await getCollection('gallery');
+const kabulPhotos = photos.filter(p => p.data.page === 'kabul-streets');
+---
+<Layout title="Kabul Streets — SHAAR Studio" activeNav="projects">
+  <div class="project-hero">
+    <div class="project-hero-content">
+      <div class="section-label"><a href="/projects" style="color:var(--accent);text-decoration:none">&#8592;&ensp;Back to Projects</a></div>
+      <h1>Kabul<br><em>Streets</em></h1>
+      <p>{kabul.description}</p>
+    </div>
+  </div>
+  <div class="project-details">
+    <div class="project-meta">
+      <div class="meta-item"><label>Period</label><p>{kabul.period}</p></div>
+      <div class="meta-item"><label>Location</label><p>{kabul.location}</p></div>
+      <div class="meta-item"><label>Medium</label><p>Street Photography</p></div>
+      {kabul.camera && <div class="meta-item"><label>Camera</label><p>{kabul.camera}</p></div>}
+      <div class="meta-item"><label>Format</label><p>Photo Book<br><span style="font-size:0.8rem;color:var(--text-dim)">{kabul.status}</span></p></div>
+      <div class="meta-item" style="margin-top:3rem"><a class="btn" style="display:block;text-align:center;" href="/contact">Inquire About the Book</a></div>
+    </div>
+    <div class="project-photos">
+      {kabulPhotos.length > 0 ? (
+        kabulPhotos.map(photo => (
+          <img src={photo.data.image} alt={photo.data.title} loading="lazy" />
+        ))
+      ) : (
+        <>
+          <div class="placeholder-bg" style="aspect-ratio:16/10"><span>Upload Kabul photos via CMS</span></div>
+          <div class="placeholder-bg" style="aspect-ratio:16/10"><span>They will appear here</span></div>
+        </>
+      )}
+    </div>
+  </div>
+</Layout>

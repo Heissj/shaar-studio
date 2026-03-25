@@ -1,0 +1,23 @@
+---
+const { active = '' } = Astro.props;
+const links = [
+  { href: '/', label: 'Home', id: 'home' },
+  { href: '/gallery', label: 'Gallery', id: 'gallery' },
+  { href: '/projects', label: 'Projects', id: 'projects' },
+  { href: '/journal', label: 'Journal', id: 'journal' },
+  { href: '/about', label: 'About', id: 'about' },
+  { href: '/contact', label: 'Contact', id: 'contact' },
+  { href: '/admin', label: '● Admin', id: 'admin' },
+];
+---
+<nav id="mainNav">
+  <a class="nav-logo" href="/">SHAAR <span>Studio</span><span class="fuji-dot"></span></a>
+  <ul class="nav-links" id="navLinks">
+    {links.map(link => (
+      <li><a href={link.href} class:list={[{ active: active === link.id }, { 'nav-admin': link.id === 'admin' }]}>{link.label}</a></li>
+    ))}
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>

@@ -13,44 +13,43 @@ const { title = 'SHAAR Studio — Sajjad Sharifi', activeNav = '' } = Astro.prop
   <title>{title}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script is:inline>
-  window.addEventListener('load', function() {
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", function(user) {
-        if (!user) {
-          window.netlifyIdentity.on("login", function() {
-            document.location.href = "/admin/";
-          });
+    window.addEventListener('load', function() {
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", function(user) {
+          if (!user) {
+            window.netlifyIdentity.on("login", function() {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+        var hash = window.location.hash || "";
+        if (hash.includes("invite_token") || hash.includes("recovery_token")) {
+          window.netlifyIdentity.open();
         }
-      });
-      var hash = window.location.hash || "";
-      if (hash.includes("invite_token") || hash.includes("recovery_token")) {
-        window.netlifyIdentity.open();
       }
-    }
-  });
-</script>
+    });
+  </script>
 </head>
 <body>
   <Nav active={activeNav} />
   <slot />
   <Footer />
-  <script>
-    
-    // Nav scroll effect
-    window.addEventListener('scroll', () => {
-      document.querySelector('nav')?.classList.toggle('scrolled', window.scrollY > 60);
+  <script is:inline>
+    window.addEventListener('scroll', function() {
+      var nav = document.querySelector('nav');
+      if (nav) nav.classList.toggle('scrolled', window.scrollY > 60);
     });
-    // Mobile nav toggle
-    document.getElementById('navToggle')?.addEventListener('click', () => {
-      document.getElementById('navLinks')?.classList.toggle('open');
+    var toggle = document.getElementById('navToggle');
+    if (toggle) toggle.addEventListener('click', function() {
+      var links = document.getElementById('navLinks');
+      if (links) links.classList.toggle('open');
     });
-    // Scroll reveals
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
   </script>
 </body>
 </html>

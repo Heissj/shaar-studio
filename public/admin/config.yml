@@ -112,3 +112,6 @@ collections:
 
 Save, then:
 ```
+git add .
+git commit -m "Fix config"
+git push --force

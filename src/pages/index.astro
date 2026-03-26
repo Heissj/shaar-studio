@@ -16,41 +16,23 @@ const featured = photos.filter(p => p.data.page === 'featured');
 
   <div class="cinema-wrapper" id="cinemaWrapper">
     <section class="cinema" id="cinema">
-      <!--
-        HOW TO ADD YOUR SLIDES:
-        1. Drop your photos into the public/images/ folder
-        2. Name them slide-1.jpg, slide-2.jpg, etc.
-        3. Update the src, data-title, and data-location below
-      -->
-      <div class="cinema-slide active" data-title="Morning Market" data-location="Boston, 2018">
-        <div class="slide-bg"><img src="/images/slide-1.jpg" alt="Morning Market" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder-bg><span>Add slide-1.jpg to public/images/</span></div>'" /></div>
-      </div>
-      <div class="cinema-slide" data-title="The Bread Seller" data-location="Boston, 2019">
-        <div class="slide-bg"><img src="/images/slide-2.jpg" alt="The Bread Seller" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder-bg><span>Add slide-2.jpg to public/images/</span></div>'" /></div>
-      </div>
-      <div class="cinema-slide" data-title="Winter Crossroads" data-location="Boston, 2020">
-        <div class="slide-bg"><img src="/images/slide-3.jpg" alt="Winter Crossroads" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder-bg><span>Add slide-3.jpg to public/images/</span></div>'" /></div>
-      </div>
-      <div class="cinema-slide" data-title="After the Rain" data-location="Boston, 2018">
-        <div class="slide-bg"><img src="/images/slide-4.jpg" alt="After the Rain" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder-bg><span>Add slide-4.jpg to public/images/</span></div>'" /></div>
-      </div>
-      <div class="cinema-slide" data-title="Departure" data-location="Boston, 2021">
-        <div class="slide-bg"><img src="/images/slide-5.jpg" alt="Departure" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=placeholder-bg><span>Add slide-5.jpg to public/images/</span></div>'" /></div>
-      </div>
+      {homeData.slides.map((slide, i) => (
+        <div class={`cinema-slide ${i === 0 ? 'active' : ''}`} data-title={slide.title} data-location={slide.location}>
+          <div class="slide-bg"><img src={slide.image} alt={slide.title} /></div>
+        </div>
+      ))}
 
       <div class="cinema-caption">
         <div class="cinema-caption-text">
-          <div class="cinema-number" id="cinemaNumber">01 / 05</div>
-          <h2 id="cinemaTitle" class="visible">Morning Market</h2>
-          <p id="cinemaLocation" class="visible">Kabul, 2018</p>
+          <div class="cinema-number" id="cinemaNumber">01 / {String(homeData.slides.length).padStart(2, '0')}</div>
+          <h2 id="cinemaTitle" class="visible">{homeData.slides[0].title}</h2>
+          <p id="cinemaLocation" class="visible">{homeData.slides[0].location}</p>
         </div>
         <div class="cinema-caption-right">
           <div class="cinema-indicators" id="cinemaIndicators">
-            <button class="cinema-ind active" data-slide="0"></button>
-            <button class="cinema-ind" data-slide="1"></button>
-            <button class="cinema-ind" data-slide="2"></button>
-            <button class="cinema-ind" data-slide="3"></button>
-            <button class="cinema-ind" data-slide="4"></button>
+            {homeData.slides.map((_, i) => (
+              <button class={`cinema-ind ${i === 0 ? 'active' : ''}`} data-slide={String(i)}></button>
+            ))}
           </div>
           <div class="cinema-nav">
             <button id="cinemaPrev">&#8592;</button>
@@ -101,7 +83,6 @@ const featured = photos.filter(p => p.data.page === 'featured');
   </section>
 
   <script is:inline>
-    // ═══ CINEMA (scroll-driven) ═══
     var slides = document.querySelectorAll('.cinema-slide');
     var indicators = document.querySelectorAll('.cinema-ind');
     var bar = document.getElementById('cinemaBar');
@@ -165,7 +146,6 @@ const featured = photos.filter(p => p.data.page === 'featured');
       });
     });
 
-    // ═══ STRIP (auto-drift + momentum drag) ═══
     var track = document.getElementById('stripTrack');
     var isDragging = false, dragStartX = 0, dragScrollLeft = 0;
     var velocity = 0, lastX = 0, lastTime = 0, momentumId = null;

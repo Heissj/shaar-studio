@@ -2,5 +2,12 @@
   "subtitle": "Street & Documentary Photographer",
   "tagline": "Stories of people and places on the streets",
   "ctaHeading": "Kabul Streets",
-  "ctaText": "A five-year photographic journey through the streets, markets, and hidden corners of a city in transformation. 2016–2021."
+  "ctaText": "A five-year photographic journey through the streets, markets, and hidden corners of a city in transformation. 2016–2021.",
+  "slides": [
+    { "image": "/images/slide-1.jpg", "title": "Morning Market", "location": "Kabul, 2018" },
+    { "image": "/images/slide-2.jpg", "title": "The Bread Seller", "location": "Kabul, 2019" },
+    { "image": "/images/slide-3.jpg", "title": "Winter Crossroads", "location": "Kabul, 2020" },
+    { "image": "/images/slide-4.jpg", "title": "After the Rain", "location": "Kabul, 2018" },
+    { "image": "/images/slide-5.jpg", "title": "Departure", "location": "Kabul, 2021" }
+  ]
 }

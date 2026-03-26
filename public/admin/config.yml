@@ -106,12 +106,3 @@ collections:
         file: "src/data/footer.json"
         fields:
           - { label: "Copyright", name: "copyright", widget: "string" }
-```
-
-**Make sure there is nothing after the last line.** No extra text, no instructions, no backticks. The file should end after `widget: "string" }` and a blank line.
-
-Save, then:
-```
-git add .
-git commit -m "Fix config"
-git push --force

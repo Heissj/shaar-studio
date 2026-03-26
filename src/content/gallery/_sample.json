@@ -1,7 +1,8 @@
 {
   "title": "Sample Photo",
-  "image": "/images/sample.jpg",
+  "image": "/images/dscf0878.jpg",
   "location": "Kabul, Afghanistan",
   "tag": "street",
-  "page": "gallery"
+  "page": "featured",
+  "date": "2026-03-25T21:41:00.000-04:00"
 }

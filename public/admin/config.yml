@@ -1,4 +1,41 @@
-- label: "Home Page"
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "journal"
+    label: "Journal"
+    folder: "src/content/journal"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Cover Image", name: "cover", widget: "image", required: false }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Tags", name: "tags", widget: "list", allow_add: true }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "gallery"
+    label: "Gallery"
+    folder: "src/content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Date", name: "date", widget: "datetime", required: false }
+      - { label: "Location", name: "location", widget: "string", required: false }
+      - { label: "Tag", name: "tag", widget: "select", options: ["street", "portrait", "architecture", "landscape"] }
+      - { label: "Page", name: "page", widget: "select", options: ["gallery", "kabul-streets", "featured", "about"], default: "gallery" }
+
+  - name: "settings"
+    label: "Edit Pages"
+    files:
+      - label: "Home Page"
         name: "home"
         file: "src/data/home.json"
         fields:
@@ -13,3 +50,60 @@
               - { label: "Image", name: "image", widget: "image" }
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Location", name: "location", widget: "string" }
+
+      - label: "Gallery Page"
+        name: "gallery_page"
+        file: "src/data/gallery.json"
+        fields:
+          - { label: "Subtitle", name: "subtitle", widget: "string" }
+
+      - label: "Projects Page"
+        name: "projects_page"
+        file: "src/data/projects.json"
+        fields:
+          - { label: "Subtitle", name: "subtitle", widget: "string" }
+          - label: "Projects"
+            name: "projects"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Cover Image", name: "cover", widget: "image", required: false }
+              - { label: "Period", name: "period", widget: "string" }
+              - { label: "Location", name: "location", widget: "string" }
+              - { label: "Camera", name: "camera", widget: "string", required: false }
+              - { label: "Status", name: "status", widget: "select", options: ["In Development", "Complete", "Coming Soon"] }
+              - { label: "Link", name: "link", widget: "string", required: false }
+
+      - label: "Journal Page"
+        name: "journal_page"
+        file: "src/data/journal.json"
+        fields:
+          - { label: "Subtitle", name: "subtitle", widget: "string" }
+
+      - label: "About Page"
+        name: "about_page"
+        file: "src/data/about.json"
+        fields:
+          - { label: "Paragraph 1", name: "p1", widget: "text" }
+          - { label: "Paragraph 2", name: "p2", widget: "text" }
+          - { label: "Paragraph 3", name: "p3", widget: "text" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Values", name: "values", widget: "list", allow_add: true }
+
+      - label: "Contact Page"
+        name: "contact_page"
+        file: "src/data/contact.json"
+        fields:
+          - { label: "Subtitle", name: "subtitle", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+          - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false }
+
+      - label: "Footer"
+        name: "footer"
+        file: "src/data/footer.json"
+        fields:
+          - { label: "Copyright", name: "copyright", widget: "string" }
+```

@@ -4,11 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SHAAR Studio — Admin</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <style>
+    .admin-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 99999; background: #0a0a0a; padding: 0.5rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.06); font-family: sans-serif; }
+    .admin-bar a { color: #c9a96e; text-decoration: none; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; }
+    .admin-bar a:hover { color: #e8e4df; }
+    .admin-bar span { color: #4a4640; font-size: 0.65rem; letter-spacing: 0.1em; }
+    #nc-root { padding-top: 40px; }
+  </style>
 </head>
 <body>
+  <div class="admin-bar">
+    <a href="/">← Back to Site</a>
+    <span>SHAAR Studio Admin</span>
+    <a href="/" target="_blank">View Site ↗</a>
+  </div>
   <div id="nc-root"></div>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
-```
